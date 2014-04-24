@@ -55,11 +55,12 @@ class Putio_model extends CI_Model
    {
 
       if ($type == 0) {
+          echo "Uploading Movie Torrents";
           $location = $this->blackhole_movies;
           $parent = $this->movie_folder_id;
-
       }
       else {
+          echo "Uploading TV Torrents";
           $location = $this->blackhole_tv;
           $parent = $this->tv_folder_id;
       }
@@ -68,6 +69,7 @@ class Putio_model extends CI_Model
       $files = directory_map($location);
       foreach ($files as $file)
       {
+         echo "Uplading $file to $parent";
          $this->putio->add_torrent_file($location . $file, $parent);
          unlink($location . $file);
       }
