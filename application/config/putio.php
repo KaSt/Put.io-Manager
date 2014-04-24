@@ -55,6 +55,6 @@ $config['tv_folder_id'] = 178712667;
 /**
  * Where should the lock file go?
  */
-$config['lock_file'] = '/var/www/putio/putio.lock';
+$config['lock_file'] = './putio.lock';
 
 ?>
