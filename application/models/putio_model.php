@@ -17,13 +17,26 @@ class Putio_model extends CI_Model
       $this->process_tv = $this->config->item('putio_process_tv');
       $this->process_movies = $this->config->item('putio_process_movies');
 
-      $this->blackhole = $this->config->item('blackhole');
+      $this->blackhole_movies = $this->config->item('blackhole_movies');
+      $this->blackhole_tv = $this->config->item('blackhole_tv');
 
+      $this->tv_path = $this->config->item('tv_path');
       $this->movie_path = $this->config->item('movie_path');
+
+      $this->tv_folder_id = $this->config->item('tv_folder_id');
+      $this->movie_folder_id = $this->config->item('movie_folder_id');
+
+
+
    }
 
-   private function _get_files($parent = 0)
+   private function _get_files($type = 0)
    {
+      if ($type == 0)
+          $parent = $this->movie_folder_id;
+      else
+          $parent = $this->tv_folder_id;
+
       $objects = $this->putio->list_files($parent);
 
       $files = array();
@@ -38,41 +51,55 @@ class Putio_model extends CI_Model
       return $files;
    }
 
-   function upload_torrents()
+   function upload_torrents($type = 0)
    {
-      $location = $this->blackhole;
+
+      if ($type == 0) {
+          $location = $this->blackhole_movies;
+          $parent = $this->movie_folder_id;
+
+      }
+      else {
+          $location = $this->blackhole_tv;
+          $parent = $this->tv_folder_id;
+      }
 
       $this->load->helper(array('directory', 'file'));
       $files = directory_map($location);
       foreach ($files as $file)
       {
-         $this->putio->add_torrent_file($location . $file);
+         $this->putio->add_torrent_file($location . $file, $parent);
          unlink($location . $file);
       }
    }
 
-   function get_files()
+   function get_files($type = 0)
    {
-      return $this->_get_files();
+      return $this->_get_files($type);
    }
 
-   function download_file($file)
+   function download_file($file, $type)
    {
       if (empty($file) || !isset($file['id']) || !isset($file['name']))
          return false;
 
-      if (!file_exists($this->location . 'complete/'))
-         mkdir($this->location . 'complete/');
+         if ($type == 0)
+          $location = $this->movie_path;
+         else
+          $location = $this->tv_path;
+
+      //if (!file_exists($this->location . 'complete/'))
+     //    mkdir($this->location . 'complete/');
 
       if (!file_exists($this->location . 'incomplete/'))
          mkdir($this->location . 'incomplete/');
 
       if ($this->putio->download_file($file['id'], $this->location . 'incomplete/' . $file['name'])) {
-         mkdir($this->location . 'complete/' . basename($file['name']));
+         mkdir($location . basename($file['name']));
 
          rename(
             $this->location . 'incomplete/' . $file['name'],
-            $this->location . 'complete/' . basename($file['name']) . '/' . $file['name']
+            $location . basename($file['name']) . '/' . $file['name']
          );
       } else
          return false;
@@ -110,10 +137,10 @@ class Putio_model extends CI_Model
       $dirpath = $this->location . 'complete/' . basename($file['name']) . '/';
       $filepath = $dirpath . $file['name'];
 
-      if (filesize($filepath) < 3221225472)
-         exec($this->process_tv . ' ' . $dirpath);
-      else
-         exec($this->process_movies . ' ' . $dirpath);
+      //if (filesize($filepath) < 3221225472)
+      //   exec($this->process_tv . ' ' . $dirpath);
+      //else
+      //   exec($this->process_movies . ' ' . $dirpath);
 
       return true;
    }

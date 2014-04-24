@@ -8,7 +8,7 @@
  *
  * EX. 'PAYURGLP'
  */
-$config['putio_key'] = 'QLGRUYAP';
+$config['putio_key'] = 'W3VIBTRZ';
 
 /**
  * This is where we will put your
@@ -17,14 +17,16 @@ $config['putio_key'] = 'QLGRUYAP';
  *
  * EX. /var/www/putio/downloads
  */
-$config['putio_location'] = '/var/www/putio/downloads/';
+$config['putio_location'] =  FCPATH . 'downloads/';
 
 /**
  * This is where we look for torrent
  * files to upload to your putio
  * account.
  */
-$config['blackhole'] = '/var/www/couchpotato/torrents/';
+$config['blackhole_movies'] = '/Various/Complete/Movies/Torrents/';
+$config['blackhole_tv'] = '/Various/Complete/TV/torrents/';
+
 
 /**
  * What do we run after when we
@@ -32,13 +34,23 @@ $config['blackhole'] = '/var/www/couchpotato/torrents/';
  *
  * EX. 'python /usr/share/sickbeard/autoProcessTV/sabToSickBeard.py'
  */
-$config['putio_process_tv'] = 'python /usr/share/sickbeard/autoProcessTV/sabToSickBeard.py';
-$config['putio_process_movies'] = 'python /home/sjlu/sabToCouchPotato.py -d';
+//$config['putio_process_tv'] = 'python /usr/share/sickbeard/autoProcessTV/sabToSickBeard.py';
+//$config['putio_process_movies'] = 'python /home/sjlu/sabToCouchPotato.py -d';
 
 /**
  * Where should we place movies?
  */
-$config['movie_path'] = '/var/www/sabnzbd/downloads/complete/Movies/';
+$config['movie_path'] = '/Various/Complete/Movies/';
+$config['tv_path'] = '/Various/Complete/TV/';
+
+
+/**
+ * PUT.IO Folder Ids
+ */
+$config['movie_folder_id'] = 178712665;
+$config['tv_folder_id'] = 178712667;
+
+
 
 /**
  * Where should the lock file go?

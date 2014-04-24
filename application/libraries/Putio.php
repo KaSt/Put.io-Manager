@@ -17,11 +17,12 @@ class Putio {
 
    }
 
-   function add_torrent_file($file)
+   function add_torrent_file($file, $parent)
    {
       $url = 'https://api.put.io/v2/files/upload?oauth_token=' . $this->key;
       $post = array(
-             "file" => "@" . $file
+             "file" => "@" . $file,
+             "parent_id" => $parent
       );
 
       $ch = curl_init();
