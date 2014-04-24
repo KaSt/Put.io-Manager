@@ -66,7 +66,7 @@ class Putio_model extends CI_Model
       }
 
       $this->load->helper(array('directory', 'file'));
-      $files = directory_map($location);
+      $files = directory_map($location, 0, true);
       foreach ($files as $file)
       {
          echo "Uplading $file to $parent\n";
