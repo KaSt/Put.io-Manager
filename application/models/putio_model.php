@@ -69,9 +69,11 @@ class Putio_model extends CI_Model
       $files = directory_map($location, 0, true);
       foreach ($files as $file)
       {
-         echo "Uplading $file to $parent\n";
-         echo $this->putio->add_torrent_file($location . $file, $parent)."\n";
-         unlink($location . $file);
+         if ($file != "." && $file != "./") {
+              echo "Uplading $file to $parent\n";
+              echo $this->putio->add_torrent_file($location . $file, $parent)."\n";
+              unlink($location . $file);
+         }
       }
    }
 
