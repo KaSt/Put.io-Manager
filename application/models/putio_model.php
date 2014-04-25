@@ -32,6 +32,8 @@ class Putio_model extends CI_Model
 
    private function _get_files($type = 0)
    {
+      $parent = $this->movie_folder_id;
+
       if ($type == 0)
           $parent = $this->movie_folder_id;
       else
