@@ -46,7 +46,7 @@ class Cron extends CI_Controller
                echo "Getting files of type $i\n";
      		// get the file list
      		$files = $this->putio_model->get_files($i);
-               echo "Downloading files if any\";
+               echo "Downloading files if any\n";
      		// download each file
      		foreach ($files as &$file)
      		{
