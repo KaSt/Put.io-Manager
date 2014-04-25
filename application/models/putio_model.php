@@ -30,17 +30,10 @@ class Putio_model extends CI_Model
 
    }
 
-   private function _get_files($type = 0)
+   private function _get_files($parent = 0)
    {
-      $parent = $this->movie_folder_id;
-
-      if ($type == 0)
-          $parent = $this->movie_folder_id;
-      else
-          $parent = $this->tv_folder_id;
-
       $objects = $this->putio->list_files($parent);
-      echo "Retrieved file list fragment\n";
+      echo "Retrieved file list fragment for parent $parent\n";
 
       $files = array();
       foreach ($objects as $object)
@@ -82,7 +75,15 @@ class Putio_model extends CI_Model
 
    function get_files($type = 0)
    {
-      return $this->_get_files($type);
+
+      $parent = $this->movie_folder_id;
+
+      if ($type == 0)
+          $parent = $this->movie_folder_id;
+      else
+          $parent = $this->tv_folder_id;
+
+      return $this->_get_files($parent);
    }
 
    function download_file($file, $type)
