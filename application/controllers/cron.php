@@ -54,7 +54,7 @@ class Cron extends CI_Controller
      				continue;
 
                     echo "Downloading $file\n";
-     			if ($this->putio_model->download_file($file))
+     			if ($this->putio_model->download_file($file, $i))
      				$this->putio_model->delete_file($file);
 
      		}
