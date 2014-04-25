@@ -41,7 +41,9 @@ class Cron extends CI_Controller
 		$this->putio_model->upload_torrents(0);
 		$this->putio_model->upload_torrents(1);
 
+          echo "Downloading files\n";
           for ($i=0; $i<2; $i++) {
+               echo "Getting files of type $i\n";
      		// get the file list
      		$files = $this->putio_model->get_files($i);
 
@@ -51,6 +53,7 @@ class Cron extends CI_Controller
      			if ($this->putio_model->file_exists($file))
      				continue;
 
+                    echo "Downloading $file\n";
      			if ($this->putio_model->download_file($file))
      				$this->putio_model->delete_file($file);
 
