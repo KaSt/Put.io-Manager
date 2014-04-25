@@ -38,6 +38,7 @@ class Putio_model extends CI_Model
           $parent = $this->tv_folder_id;
 
       $objects = $this->putio->list_files($parent);
+      echo "Retrieved file list fragment\n";
 
       $files = array();
       foreach ($objects as $object)
