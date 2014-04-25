@@ -118,7 +118,9 @@ class Putio_model extends CI_Model
 
       if (
          file_exists($this->location . 'complete/' . $file['name'])
-         || file_exists($this->location . 'incomplete/' . $file['name'])
+         || file_exists($this->location . 'incomplete/' . $file['name']
+         || file_exists($this->tv_path . $file['name']
+         || file_exists($this->movie_path . $file['name'])
       )
          return true;
 
